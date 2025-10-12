@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  firebase_uid: MyString
+  field_of_study_id: MyString
+  school_year_id: MyString
+  name: MyString
+  email: MyString
+  phone_number: MyString
+  school_name: MyString
+  major_name: MyString
+  string: MyString
+
+two:
+  firebase_uid: MyString
+  field_of_study_id: MyString
+  school_year_id: MyString
+  name: MyString
+  email: MyString
+  phone_number: MyString
+  school_name: MyString
+  major_name: MyString
+  string: MyString
