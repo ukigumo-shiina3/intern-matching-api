@@ -10,8 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_12_094459) do
-  create_table "interns", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2025_10_12_132951) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+  enable_extension "pgcrypto"
+
+  create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "firebase_uid", null: false
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "prefecture", null: false
+    t.string "municipality", null: false
+    t.string "address_line", null: false
+    t.string "title", null: false
+    t.string "web_url", null: false
+    t.string "intern_conditions", null: false
+    t.boolean "is_published", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "field_of_studies", force: :cascade do |t|
+    t.uuid "intern_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "interns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "firebase_uid", null: false
     t.string "field_of_study_id", null: false
     t.string "school_year_id", null: false
@@ -26,5 +52,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_094459) do
     t.index ["field_of_study_id"], name: "index_interns_on_field_of_study_id"
     t.index ["firebase_uid"], name: "index_interns_on_firebase_uid", unique: true
     t.index ["school_year_id"], name: "index_interns_on_school_year_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.uuid "intern_id", null: false
+    t.uuid "company_id", null: false
+    t.text "content", null: false
+    t.datetime "read_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.uuid "intern_id", null: false
+    t.uuid "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["intern_id", "company_id"], name: "index_rooms_on_intern_id_and_company_id", unique: true
+  end
+
+  create_table "school_years", force: :cascade do |t|
+    t.uuid "intern_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 end

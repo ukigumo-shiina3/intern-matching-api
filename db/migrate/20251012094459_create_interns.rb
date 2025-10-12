@@ -1,6 +1,6 @@
 class CreateInterns < ActiveRecord::Migration[8.0]
   def change
-    create_table :interns do |t|
+    create_table :interns, id: :uuid do |t|
       t.string :firebase_uid, null: false
       t.string :field_of_study_id, null: false
       t.string :school_year_id, null: false
