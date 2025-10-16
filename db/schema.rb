@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_16_001225) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_16_101711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -22,6 +22,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_001225) do
     t.string "prefecture", null: false
     t.string "municipality", null: false
     t.string "address_line", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "entries", force: :cascade do |t|
+    t.uuid "intern_id", null: false
+    t.bigint "job_id", null: false
+    t.string "current_status", default: "応募済み", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -48,6 +56,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_001225) do
     t.index ["field_of_study_id"], name: "index_interns_on_field_of_study_id"
     t.index ["firebase_uid"], name: "index_interns_on_firebase_uid", unique: true
     t.index ["school_year_id"], name: "index_interns_on_school_year_id"
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.uuid "company_id", null: false
+    t.string "title", null: false
+    t.string "web_url", null: false
+    t.text "intern_conditions", null: false
+    t.boolean "is_published", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
