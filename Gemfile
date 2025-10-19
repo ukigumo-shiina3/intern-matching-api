@@ -42,6 +42,7 @@ gem "thruster", require: false
 
 gem "jwt", "~> 3.1"
 gem "graphql"
+gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
