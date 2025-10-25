@@ -5,6 +5,5 @@ module Types
     field :create_intern, mutation: Mutations::CreateIntern
     field :create_or_get_room, mutation: Mutations::CreateOrGetRoom
     field :send_message, mutation: Mutations::SendMessage
-    field :mark_message_as_read, mutation: Mutations::MarkMessageAsRead
   end
 end
