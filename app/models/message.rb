@@ -6,11 +6,6 @@ class Message < ApplicationRecord
   validates :content, presence: true
   validate :sender_must_be_exactly_one
 
-
-  def mark_as_read!
-    update(read_at: Time.current) if read_at.nil?
-  end
-
   def sender
     intern || company
   end
