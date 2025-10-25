@@ -27,5 +27,35 @@ module Types
     def test_field
       "Hello World!"
     end
+
+    # Rooms queries
+    field :rooms, [Types::RoomType], null: false do
+      argument :intern_id, ID, required: false
+      argument :company_id, ID, required: false
+    end
+
+    def rooms(intern_id: nil, company_id: nil)
+      scope = Room.all
+      scope = scope.where(intern_id: intern_id) if intern_id
+      scope = scope.where(company_id: company_id) if company_id
+      scope
+    end
+
+    field :room, Types::RoomType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def room(id:)
+      Room.find_by(id: id)
+    end
+
+    # Messages queries
+    field :messages, [Types::MessageType], null: false do
+      argument :room_id, ID, required: true
+    end
+
+    def messages(room_id:)
+      Message.where(room_id: room_id).order(created_at: :asc)
+    end
   end
 end
