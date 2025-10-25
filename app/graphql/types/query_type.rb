@@ -18,18 +18,7 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
-
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
-    end
-
-    # Rooms queries
-    field :rooms, [Types::RoomType], null: false do
+    field :rooms, [ Types::RoomType ], null: false do
       argument :intern_id, ID, required: false
       argument :company_id, ID, required: false
     end
@@ -49,8 +38,7 @@ module Types
       Room.find_by(id: id)
     end
 
-    # Messages queries
-    field :messages, [Types::MessageType], null: false do
+    field :messages, [ Types::MessageType ], null: false do
       argument :room_id, ID, required: true
     end
 
