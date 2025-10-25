@@ -4,7 +4,7 @@ module Mutations
     argument :company_id, ID, required: true
 
     field :room, Types::RoomType, null: false
-    field :errors, [String], null: false
+    field :errors, [ String ], null: false
 
     def resolve(intern_id:, company_id:)
       room = Room.find_or_create_by(intern_id: intern_id, company_id: company_id)

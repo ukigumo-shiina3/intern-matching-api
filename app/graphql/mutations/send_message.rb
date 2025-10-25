@@ -6,7 +6,7 @@ module Mutations
     argument :company_id, ID, required: false
 
     field :message, Types::MessageType, null: true
-    field :errors, [String], null: false
+    field :errors, [ String ], null: false
 
     def resolve(room_id:, content:, intern_id: nil, company_id: nil)
       message = Message.new(
