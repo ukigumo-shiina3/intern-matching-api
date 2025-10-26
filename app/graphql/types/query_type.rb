@@ -45,5 +45,31 @@ module Types
     def messages(room_id:)
       Message.where(room_id: room_id).order(created_at: :asc)
     end
+
+    field :intern, Types::InternType, null: true do
+      argument :firebase_uid, String, required: false
+      argument :id, ID, required: false
+    end
+
+    def intern(firebase_uid: nil, id: nil)
+      if firebase_uid
+        Intern.find_by(firebase_uid: firebase_uid)
+      elsif id
+        Intern.find_by(id: id)
+      end
+    end
+
+    field :company, Types::CompanyType, null: true do
+      argument :firebase_uid, String, required: false
+      argument :id, ID, required: false
+    end
+
+    def company(firebase_uid: nil, id: nil)
+      if firebase_uid
+        Company.find_by(firebase_uid: firebase_uid)
+      elsif id
+        Company.find_by(id: id)
+      end
+    end
   end
 end
