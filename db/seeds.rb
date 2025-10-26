@@ -1,4 +1,4 @@
-intern1 = Intern.find_or_create_by!(firebase_uid: "test-intern-1") do |i|
+intern1 = Intern.find_or_create_by!(firebase_uid: "wz3NOyIXlHU3IVbtioRtv2zvYjc2") do |i|
   i.field_of_study_id = "1"
   i.school_year_id = "1"
   i.name = "山田太郎"
