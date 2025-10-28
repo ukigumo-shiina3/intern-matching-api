@@ -32,7 +32,6 @@ company2 = Company.find_or_create_by!(firebase_uid: "test-company-2") do |c|
   c.address_line = "2-2-2 イノベーションタワー"
 end
 
-# 実際にログインしている会社用（test1@gmail.com）
 company3 = Company.find_or_create_by!(firebase_uid: "gpyvlfrSX3fuIPXsVHL1zIC4jsE2") do |c|
   c.name = "株式会社テスト"
   c.email = "test1@gmail.com"
