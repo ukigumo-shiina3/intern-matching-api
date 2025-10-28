@@ -32,10 +32,21 @@ company2 = Company.find_or_create_by!(firebase_uid: "test-company-2") do |c|
   c.address_line = "2-2-2 イノベーションタワー"
 end
 
+# 実際にログインしている会社用（test1@gmail.com）
+company3 = Company.find_or_create_by!(firebase_uid: "gpyvlfrSX3fuIPXsVHL1zIC4jsE2") do |c|
+  c.name = "株式会社テスト"
+  c.email = "test1@gmail.com"
+  c.prefecture = "東京都"
+  c.municipality = "中央区"
+  c.address_line = "日本橋1-1-1"
+end
+
 room1 = Room.find_or_create_by!(intern: intern1, company: company1)
 room2 = Room.find_or_create_by!(intern: intern1, company: company2)
 room3 = Room.find_or_create_by!(intern: intern2, company: company1)
 room4 = Room.find_or_create_by!(intern: intern2, company: company2)
+room5 = Room.find_or_create_by!(intern: intern1, company: company3)
+room6 = Room.find_or_create_by!(intern: intern2, company: company3)
 
 unless Message.exists?(room: room1)
   Message.create!([
@@ -137,6 +148,44 @@ unless Message.exists?(room: room4)
       company: nil,
       content: "ありがとうございます！次のステップについて教えていただけますか？",
       created_at: 12.hours.ago
+    }
+  ])
+end
+
+unless Message.exists?(room: room5)
+  Message.create!([
+    {
+      room: room5,
+      company: company3,
+      intern: nil,
+      content: "はじめまして！弊社のインターンシップについてご案内させていただきます。",
+      created_at: 1.day.ago
+    },
+    {
+      room: room5,
+      intern: intern1,
+      company: nil,
+      content: "はじめまして。よろしくお願いします！",
+      created_at: 12.hours.ago
+    }
+  ])
+end
+
+unless Message.exists?(room: room6)
+  Message.create!([
+    {
+      room: room6,
+      intern: intern2,
+      company: nil,
+      content: "こんにちは。インターンシップに応募させていただきます。",
+      created_at: 2.days.ago
+    },
+    {
+      room: room6,
+      company: company3,
+      intern: nil,
+      content: "ご応募ありがとうございます！まずは面談をさせていただきたいと思います。",
+      created_at: 1.day.ago
     }
   ])
 end
