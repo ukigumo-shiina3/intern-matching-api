@@ -18,6 +18,8 @@ services:
         value: enabled
       - key: RAILS_SERVE_STATIC_FILES
         value: enabled
+      - key: FRONTEND_URL
+        value: https://intern-matching-web.vercel.app
 
 databases:
   - name: intern-matching-db
