@@ -9,7 +9,6 @@ test:
   adapter: test
 
 production:
-  # Disabled solid_cable for simple deployment
   # adapter: solid_cable
   # connects_to:
   #   database:

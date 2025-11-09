@@ -5,7 +5,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # Development
     origins "http://localhost:3000",
             "http://localhost:3001",
-            # All Vercel deployments (production + preview)
             /https:\/\/.*\.vercel\.app$/
 
     resource "*",
