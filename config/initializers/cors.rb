@@ -5,7 +5,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # Development
     origins "http://localhost:3000",
             "http://localhost:3001",
-            /https:\/\/.*\.vercel\.app$/
+            "https://intern-matching-web.vercel.app"
 
     resource "*",
       headers: :any,
