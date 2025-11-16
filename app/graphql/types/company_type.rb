@@ -7,6 +7,7 @@ module Types
     field :prefecture, String, null: false
     field :municipality, String, null: false
     field :address_line, String, null: false
+    field :web_url, String, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

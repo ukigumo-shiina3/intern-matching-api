@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_16_021638) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_16_120729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -24,6 +24,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_021638) do
     t.string "address_line", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "web_url"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -59,7 +60,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_021638) do
   create_table "jobs", force: :cascade do |t|
     t.uuid "company_id", null: false
     t.string "title", null: false
-    t.string "web_url", null: false
     t.text "intern_conditions", null: false
     t.boolean "is_published", null: false
     t.datetime "created_at", null: false
