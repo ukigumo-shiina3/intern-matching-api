@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_27_234127) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_16_021638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -51,7 +51,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_234127) do
     t.string "major_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["field_of_study_id", "school_year_id"], name: "index_interns_on_field_of_study_id_and_school_year_id", unique: true
     t.index ["field_of_study_id"], name: "index_interns_on_field_of_study_id"
     t.index ["firebase_uid"], name: "index_interns_on_firebase_uid", unique: true
     t.index ["school_year_id"], name: "index_interns_on_school_year_id"
