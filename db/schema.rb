@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_16_120729) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -19,12 +19,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_120729) do
     t.string "firebase_uid", null: false
     t.string "name", null: false
     t.string "email", null: false
-    t.string "prefecture", null: false
-    t.string "municipality", null: false
     t.string "address_line", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "web_url"
+    t.bigint "prefecture_id", null: false
+    t.bigint "municipality_id", null: false
+    t.index ["municipality_id"], name: "index_companies_on_municipality_id"
+    t.index ["prefecture_id"], name: "index_companies_on_prefecture_id"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -76,6 +78,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_120729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "municipalities", force: :cascade do |t|
+    t.bigint "prefecture_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prefecture_id", "name"], name: "index_municipalities_on_prefecture_id_and_name", unique: true
+    t.index ["prefecture_id"], name: "index_municipalities_on_prefecture_id"
+  end
+
+  create_table "prefectures", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_prefectures_on_name", unique: true
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.uuid "intern_id", null: false
     t.uuid "company_id", null: false
@@ -90,4 +108,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_120729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "companies", "municipalities"
+  add_foreign_key "companies", "prefectures"
+  add_foreign_key "municipalities", "prefectures"
 end
