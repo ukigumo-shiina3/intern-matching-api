@@ -71,5 +71,21 @@ module Types
         Company.find_by(id: id)
       end
     end
+
+    field :prefectures, [ Types::PrefectureType ], null: false
+
+    def prefectures
+      Prefecture.order(:id)
+    end
+
+    field :municipalities, [ Types::MunicipalityType ], null: false do
+      argument :prefecture_id, ID, required: false
+    end
+
+    def municipalities(prefecture_id: nil)
+      scope = Municipality.all
+      scope = scope.where(prefecture_id: prefecture_id) if prefecture_id
+      scope.order(:id)
+    end
   end
 end

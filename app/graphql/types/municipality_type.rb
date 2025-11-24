@@ -1,13 +1,8 @@
 module Types
-  class CompanyType < Types::BaseObject
+  class MunicipalityType < Types::BaseObject
     field :id, ID, null: false
-    field :firebase_uid, String, null: false
     field :name, String, null: false
-    field :email, String, null: false
     field :prefecture, Types::PrefectureType, null: false
-    field :municipality, Types::MunicipalityType, null: false
-    field :address_line, String, null: false
-    field :web_url, String, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end
