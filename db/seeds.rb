@@ -1,3 +1,58 @@
+prefectures_data = [
+  { name: "北海道", capital: "札幌市" },
+  { name: "青森県", capital: "青森市" },
+  { name: "岩手県", capital: "盛岡市" },
+  { name: "宮城県", capital: "仙台市" },
+  { name: "秋田県", capital: "秋田市" },
+  { name: "山形県", capital: "山形市" },
+  { name: "福島県", capital: "福島市" },
+  { name: "茨城県", capital: "水戸市" },
+  { name: "栃木県", capital: "宇都宮市" },
+  { name: "群馬県", capital: "前橋市" },
+  { name: "埼玉県", capital: "さいたま市" },
+  { name: "千葉県", capital: "千葉市" },
+  { name: "東京都", capital: "新宿区" },
+  { name: "神奈川県", capital: "横浜市" },
+  { name: "新潟県", capital: "新潟市" },
+  { name: "富山県", capital: "富山市" },
+  { name: "石川県", capital: "金沢市" },
+  { name: "福井県", capital: "福井市" },
+  { name: "山梨県", capital: "甲府市" },
+  { name: "長野県", capital: "長野市" },
+  { name: "岐阜県", capital: "岐阜市" },
+  { name: "静岡県", capital: "静岡市" },
+  { name: "愛知県", capital: "名古屋市" },
+  { name: "三重県", capital: "津市" },
+  { name: "滋賀県", capital: "大津市" },
+  { name: "京都府", capital: "京都市" },
+  { name: "大阪府", capital: "大阪市" },
+  { name: "兵庫県", capital: "神戸市" },
+  { name: "奈良県", capital: "奈良市" },
+  { name: "和歌山県", capital: "和歌山市" },
+  { name: "鳥取県", capital: "鳥取市" },
+  { name: "島根県", capital: "松江市" },
+  { name: "岡山県", capital: "岡山市" },
+  { name: "広島県", capital: "広島市" },
+  { name: "山口県", capital: "山口市" },
+  { name: "徳島県", capital: "徳島市" },
+  { name: "香川県", capital: "高松市" },
+  { name: "愛媛県", capital: "松山市" },
+  { name: "高知県", capital: "高知市" },
+  { name: "福岡県", capital: "福岡市" },
+  { name: "佐賀県", capital: "佐賀市" },
+  { name: "長崎県", capital: "長崎市" },
+  { name: "熊本県", capital: "熊本市" },
+  { name: "大分県", capital: "大分市" },
+  { name: "宮崎県", capital: "宮崎市" },
+  { name: "鹿児島県", capital: "鹿児島市" },
+  { name: "沖縄県", capital: "那覇市" }
+]
+
+prefectures_data.each do |pref_data|
+  prefecture = Prefecture.find_or_create_by!(name: pref_data[:name])
+  Municipality.find_or_create_by!(prefecture: prefecture, name: pref_data[:capital])
+end
+
 intern1 = Intern.find_or_create_by!(firebase_uid: "wz3NOyIXlHU3IVbtioRtv2zvYjc2") do |i|
   i.field_of_study_id = "1"
   i.school_year_id = "1"
@@ -16,27 +71,30 @@ intern2 = Intern.find_or_create_by!(firebase_uid: "test-intern-2") do |i|
   i.major_name = "経済学部"
 end
 
+tokyo = Prefecture.find_by!(name: "東京都")
+tokyo_capital = Municipality.find_by!(prefecture: tokyo, name: "新宿区")
+
 company1 = Company.find_or_create_by!(firebase_uid: "test-company-1") do |c|
   c.name = "株式会社テクノロジー"
   c.email = "info@technology.com"
-  c.prefecture = "東京都"
-  c.municipality = "渋谷区"
+  c.prefecture = tokyo
+  c.municipality = tokyo_capital
   c.address_line = "1-1-1 テックビル"
 end
 
 company2 = Company.find_or_create_by!(firebase_uid: "test-company-2") do |c|
   c.name = "株式会社イノベーション"
   c.email = "info@innovation.com"
-  c.prefecture = "東京都"
-  c.municipality = "港区"
+  c.prefecture = tokyo
+  c.municipality = tokyo_capital
   c.address_line = "2-2-2 イノベーションタワー"
 end
 
 company3 = Company.find_or_create_by!(firebase_uid: "gpyvlfrSX3fuIPXsVHL1zIC4jsE2") do |c|
   c.name = "株式会社テスト"
   c.email = "test1@gmail.com"
-  c.prefecture = "東京都"
-  c.municipality = "中央区"
+  c.prefecture = tokyo
+  c.municipality = tokyo_capital
   c.address_line = "日本橋1-1-1"
 end
 
