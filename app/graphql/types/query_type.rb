@@ -87,5 +87,25 @@ module Types
       scope = scope.where(prefecture_id: prefecture_id) if prefecture_id
       scope.order(:id)
     end
+
+    field :jobs, [ Types::JobType ], null: false do
+      argument :company_id, ID, required: false
+      argument :is_published, Boolean, required: false
+    end
+
+    def jobs(company_id: nil, is_published: nil)
+      scope = Job.all
+      scope = scope.where(company_id: company_id) if company_id
+      scope = scope.where(is_published: is_published) unless is_published.nil?
+      scope.order(created_at: :desc)
+    end
+
+    field :job, Types::JobType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def job(id:)
+      Job.find_by(id: id)
+    end
   end
 end
