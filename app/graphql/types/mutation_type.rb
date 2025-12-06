@@ -8,5 +8,6 @@ module Types
     field :update_job, mutation: Mutations::UpdateJob
     field :create_or_get_room, mutation: Mutations::CreateOrGetRoom
     field :send_message, mutation: Mutations::SendMessage
+    field :create_entry, mutation: Mutations::CreateEntry
   end
 end

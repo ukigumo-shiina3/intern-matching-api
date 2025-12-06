@@ -107,5 +107,17 @@ module Types
     def job(id:)
       Job.find_by(id: id)
     end
+
+    field :entries, [ Types::EntryType ], null: false do
+      argument :intern_id, ID, required: false
+      argument :job_id, ID, required: false
+    end
+
+    def entries(intern_id: nil, job_id: nil)
+      scope = Entry.all
+      scope = scope.where(intern_id: intern_id) if intern_id
+      scope = scope.where(job_id: job_id) if job_id
+      scope.order(created_at: :desc)
+    end
   end
 end
