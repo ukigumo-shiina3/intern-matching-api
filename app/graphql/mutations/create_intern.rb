@@ -10,8 +10,7 @@ module Mutations
     argument :school_name, String, required: true
     argument :major_name, String, required: true
 
-    field :intern, Types::InternType, null: true
-    field :errors, [ String ], null: false
+    field :intern, Types::InternType, null: false
 
     def resolve(firebase_uid:, field_of_study_id:, school_year_id:, name:, email:, school_name:, major_name:)
       intern = Intern.new(
@@ -24,17 +23,11 @@ module Mutations
         major_name: major_name
       )
 
-      if intern.save
-        {
-          intern:,
-          errors: []
-        }
-      else
-        {
-          intern: nil,
-          errors: intern.errors.full_messages
-        }
+      unless intern.save
+        raise GraphQL::ExecutionError, "インターン情報の保存に失敗しました"
       end
+
+      { intern: intern }
     end
   end
 end

@@ -5,8 +5,7 @@ module Mutations
     argument :intern_id, ID, required: false
     argument :company_id, ID, required: false
 
-    field :message, Types::MessageType, null: true
-    field :errors, [ String ], null: false
+    field :message, Types::MessageType, null: false
 
     def resolve(room_id:, content:, intern_id: nil, company_id: nil)
       message = Message.new(
@@ -16,11 +15,11 @@ module Mutations
         company_id: company_id
       )
 
-      if message.save
-        { message: message, errors: [] }
-      else
-        { message: nil, errors: message.errors.full_messages }
+      unless message.save
+        raise GraphQL::ExecutionError, "メッセージの送信に失敗しました"
       end
+
+      { message: message }
     end
   end
 end

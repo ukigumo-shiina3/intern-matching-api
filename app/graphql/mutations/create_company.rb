@@ -10,8 +10,7 @@ module Mutations
     argument :address_line, String, required: true
     argument :web_url, String, required: false
 
-    field :company, Types::CompanyType, null: true
-    field :errors, [ String ], null: false
+    field :company, Types::CompanyType, null: false
 
     def resolve(firebase_uid:, name:, email:, prefecture_id:, municipality_id:, address_line:, web_url: nil)
       company = Company.new(
@@ -24,17 +23,11 @@ module Mutations
         web_url: web_url
       )
 
-      if company.save
-        {
-          company:,
-          errors: []
-        }
-      else
-        {
-          company: nil,
-          errors: company.errors.full_messages
-        }
+      unless company.save
+        raise GraphQL::ExecutionError, "企業情報の保存に失敗しました"
       end
+
+      { company: company }
     end
   end
 end

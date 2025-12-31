@@ -7,8 +7,7 @@ module Mutations
     argument :intern_conditions, String, required: true
     argument :is_published, Boolean, required: true
 
-    field :job, Types::JobType, null: true
-    field :errors, [ String ], null: false
+    field :job, Types::JobType, null: false
 
     def resolve(company_id:, title:, intern_conditions:, is_published:)
       job = Job.new(
@@ -18,17 +17,11 @@ module Mutations
         is_published: is_published
       )
 
-      if job.save
-        {
-          job:,
-          errors: []
-        }
-      else
-        {
-          job: nil,
-          errors: job.errors.full_messages
-        }
+      unless job.save
+        raise GraphQL::ExecutionError, "求人情報の保存に失敗しました"
       end
+
+      { job: job }
     end
   end
 end
