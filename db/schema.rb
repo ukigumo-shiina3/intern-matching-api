@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_31_014442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
     t.string "web_url"
     t.bigint "prefecture_id", null: false
     t.bigint "municipality_id", null: false
+    t.index ["firebase_uid"], name: "index_companies_on_firebase_uid", unique: true
     t.index ["municipality_id"], name: "index_companies_on_municipality_id"
     t.index ["prefecture_id"], name: "index_companies_on_prefecture_id"
   end
@@ -38,7 +39,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
   end
 
   create_table "field_of_studies", force: :cascade do |t|
-    t.uuid "intern_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -46,14 +46,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
 
   create_table "interns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "firebase_uid", null: false
-    t.string "field_of_study_id", null: false
-    t.string "school_year_id", null: false
     t.string "name", null: false
     t.string "email", null: false
     t.string "school_name", null: false
     t.string "major_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "school_year_id", null: false
+    t.bigint "field_of_study_id", null: false
     t.index ["field_of_study_id"], name: "index_interns_on_field_of_study_id"
     t.index ["firebase_uid"], name: "index_interns_on_firebase_uid", unique: true
     t.index ["school_year_id"], name: "index_interns_on_school_year_id"
@@ -103,7 +103,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
   end
 
   create_table "school_years", force: :cascade do |t|
-    t.uuid "intern_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -111,5 +110,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_004342) do
 
   add_foreign_key "companies", "municipalities"
   add_foreign_key "companies", "prefectures"
+  add_foreign_key "interns", "field_of_studies"
+  add_foreign_key "interns", "school_years"
   add_foreign_key "municipalities", "prefectures"
 end
