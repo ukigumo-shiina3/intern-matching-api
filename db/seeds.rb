@@ -53,9 +53,49 @@ prefectures_data.each do |pref_data|
   Municipality.find_or_create_by!(prefecture: prefecture, name: pref_data[:capital])
 end
 
+school_years_data = [
+  "学部1年",
+  "学部2年",
+  "学部3年",
+  "学部4年",
+  "修士1年",
+  "修士2年",
+  "博士1年",
+  "博士2年",
+  "博士3年"
+]
+
+school_years_data.each do |year_name|
+  SchoolYear.find_or_create_by!(name: year_name)
+end
+
+field_of_studies_data = [
+  "情報工学",
+  "電気工学",
+  "機械工学",
+  "化学",
+  "物理学",
+  "数学",
+  "生物学",
+  "経済学",
+  "経営学",
+  "法学",
+  "文学",
+  "その他"
+]
+
+field_of_studies_data.each do |field_name|
+  FieldOfStudy.find_or_create_by!(name: field_name)
+end
+
+school_year_bachelor_3 = SchoolYear.find_by!(name: "学部3年")
+school_year_bachelor_4 = SchoolYear.find_by!(name: "学部4年")
+field_computer_science = FieldOfStudy.find_by!(name: "情報工学")
+field_economics = FieldOfStudy.find_by!(name: "経済学")
+
 intern1 = Intern.find_or_create_by!(firebase_uid: "wz3NOyIXlHU3IVbtioRtv2zvYjc2") do |i|
-  i.field_of_study_id = "1"
-  i.school_year_id = "1"
+  i.field_of_study = field_computer_science
+  i.school_year = school_year_bachelor_3
   i.name = "山田太郎"
   i.email = "yamada@example.com"
   i.school_name = "東京大学"
@@ -63,8 +103,8 @@ intern1 = Intern.find_or_create_by!(firebase_uid: "wz3NOyIXlHU3IVbtioRtv2zvYjc2"
 end
 
 intern2 = Intern.find_or_create_by!(firebase_uid: "test-intern-2") do |i|
-  i.field_of_study_id = "2"
-  i.school_year_id = "2"
+  i.field_of_study = field_economics
+  i.school_year = school_year_bachelor_4
   i.name = "佐藤次郎"
   i.email = "sato@example.com"
   i.school_name = "早稲田大学"
