@@ -3,8 +3,8 @@
 module Mutations
   class CreateIntern < BaseMutation
     argument :firebase_uid, String, required: true
-    argument :field_of_study_id, String, required: true
-    argument :school_year_id, String, required: true
+    argument :field_of_study_id, ID, required: true
+    argument :school_year_id, ID, required: true
     argument :name, String, required: true
     argument :email, String, required: true
     argument :school_name, String, required: true

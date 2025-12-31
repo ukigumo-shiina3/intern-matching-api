@@ -119,5 +119,17 @@ module Types
       scope = scope.where(job_id: job_id) if job_id
       scope.order(created_at: :desc)
     end
+
+    field :school_years, [ Types::SchoolYearType ], null: false
+
+    def school_years
+      SchoolYear.order(:id)
+    end
+
+    field :field_of_studies, [ Types::FieldOfStudyType ], null: false
+
+    def field_of_studies
+      FieldOfStudy.order(:id)
+    end
   end
 end
