@@ -88,16 +88,18 @@ module Types
       scope.order(:id)
     end
 
-    field :jobs, [ Types::JobType ], null: false do
-      argument :company_id, ID, required: false
-      argument :is_published, Boolean, required: false
+    field :company_jobs, [ Types::JobType ], null: false do
+      argument :company_id, ID, required: true
     end
 
-    def jobs(company_id: nil, is_published: nil)
-      scope = Job.all
-      scope = scope.where(company_id: company_id) if company_id
-      scope = scope.where(is_published: is_published) unless is_published.nil?
-      scope.order(created_at: :desc)
+    def company_jobs(company_id:)
+      Job.where(company_id: company_id).order(created_at: :desc)
+    end
+
+    field :published_jobs, [ Types::JobType ], null: false
+
+    def published_jobs
+      Job.where(is_published: true).order(created_at: :desc)
     end
 
     field :job, Types::JobType, null: true do
