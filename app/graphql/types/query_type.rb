@@ -75,7 +75,7 @@ module Types
     field :prefectures, [ Types::PrefectureType ], null: false
 
     def prefectures
-      Prefecture.order(:id)
+      Prefecture.includes(:municipalities).order(:id)
     end
 
     field :municipalities, [ Types::MunicipalityType ], null: false do
